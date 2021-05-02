@@ -1,4 +1,4 @@
-# stress_detector
+# smartwatch_authenticator
 
 A new Flutter project.
 
