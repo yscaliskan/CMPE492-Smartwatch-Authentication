@@ -79,7 +79,7 @@ class _Authentication_PageState extends State<Authentication_Page> {
               ),
             ),
             Container(
-              margin: const EdgeInsets.only(top: 150),
+              margin: const EdgeInsets.only(top: 100),
               child: Align(
                 alignment: Alignment.bottomCenter,
                 child: Icon(

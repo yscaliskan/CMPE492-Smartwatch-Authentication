@@ -27,6 +27,19 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
+        actions: [
+          GetBuilder<EmpaticaService>(
+            builder: (ctrlr) => ctrlr.bandConnected
+                ? Padding(
+              padding: const EdgeInsets.only(right: 12),
+              child: Icon(
+                Icons.watch_rounded,
+                color: Theme.of(context).scaffoldBackgroundColor,
+              ),
+            )
+                : Container(),
+          ),
+        ],
       ),
       body: Center(
         child: Column(
@@ -38,7 +51,7 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               Container(
-                padding: const EdgeInsets.only(top: 100),
+                padding: const EdgeInsets.only(top: 50),
                 child: DropdownButton<String>(
                   value: _chosenPerson,
                   elevation: 5,
@@ -72,7 +85,7 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               Container(
-                margin: const EdgeInsets.only(left: 16, right: 16, top: 100),
+                margin: const EdgeInsets.only(left: 16, right: 16, top: 0),
                 decoration: BoxDecoration(
                   color: Colors.deepOrange,
                   borderRadius: BorderRadius.circular(10),
@@ -93,13 +106,10 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                     onPressed: () {
-                      Get.put(EmpaticaService());
-                      EmpaticaService serv = Get.find();
-                      print(serv.bandConnected);
                       if (_chosenPerson == null || _chosenPerson.isEmpty) {
                         Toast.show("Please choose who you are", context, duration: Toast.LENGTH_LONG, gravity:  Toast.CENTER);
                       }
-                      else if (!serv.bandConnected) {
+                      else if (!EmpaticaService.bandConnected) {
                         Toast.show("Please connect an E4 device", context, duration: Toast.LENGTH_LONG, gravity:  Toast.CENTER);
                       }
                       else {

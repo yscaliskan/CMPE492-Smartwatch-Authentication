@@ -8,7 +8,7 @@ const _channelName = 'stress_detector/empatica';
 class EmpaticaService extends GetxController {
   MethodChannel _methodChannel;
 
-  bool bandConnected = false;
+  static bool bandConnected = false;
 
   EmpaticaService() {
     _methodChannel = MethodChannel(_channelName);

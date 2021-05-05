@@ -47,7 +47,7 @@ public class MainActivity extends FlutterActivity implements EmpaDataDelegate, E
     }
 
     public void handleData() {
-        if (eda.size() >= edaFreq && acc.size() >= accFreq && bvp.size() >= bvpFreq && temp.size() >= tempFreq) {
+        if (eda.size() >= edaFreq && accx.size() >= accFreq && accy.size() >= accFreq && accz.size() >= accFreq && bvp.size() >= bvpFreq && temp.size() >= tempFreq) {
 
             HashMap<String, Double> res = new HashMap<>();
 
@@ -99,9 +99,9 @@ public class MainActivity extends FlutterActivity implements EmpaDataDelegate, E
 
     @Override
     public void didReceiveAcceleration(int x, int y, int z, double timestamp) {
-        this.accx.add(x);
-        this.accy.add(y);
-        this.accz.add(z);
+        this.accx.add((double) x);
+        this.accy.add((double) y);
+        this.accz.add((double) z);
         handleData();
     }
 
