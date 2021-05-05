@@ -19,9 +19,9 @@ class EmpaticaService extends GetxController {
     var sensorDataMap = Map<String, double>.from(args);
     var sensorData = SensorData.fromMap(sensorDataMap);
 
-    print(sensorData);
+ //   print(sensorData);
 
-    //ClassificationCtrlr.to.addData(sensorData);
+    ClassificationCtrlr.to.addData(sensorData);
   }
 
   void _updateBandConnection(var args) async {

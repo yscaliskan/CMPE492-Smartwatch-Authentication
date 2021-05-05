@@ -76,7 +76,7 @@ class SensorDataTable extends StatelessWidget {
               ),
             ),
             Divider(color: Colors.grey[400]),
-            dataRow('ACC', data.acc),
+            dataRow('ACC', data.accx),
             dataRow('BVP', data.bvp),
             dataRow('EDA', data.eda),
             dataRow('TEMP', data.temp),
