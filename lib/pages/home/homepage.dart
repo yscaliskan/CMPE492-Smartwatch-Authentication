@@ -93,8 +93,14 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                     onPressed: () {
+                      Get.put(EmpaticaService());
+                      EmpaticaService serv = Get.find();
+                      print(serv.bandConnected);
                       if (_chosenPerson == null || _chosenPerson.isEmpty) {
-                        Toast.show("Please choose who you are from the dropdown", context, duration: Toast.LENGTH_LONG, gravity:  Toast.BOTTOM);
+                        Toast.show("Please choose who you are", context, duration: Toast.LENGTH_LONG, gravity:  Toast.CENTER);
+                      }
+                      else if (!serv.bandConnected) {
+                        Toast.show("Please connect an E4 device", context, duration: Toast.LENGTH_LONG, gravity:  Toast.CENTER);
                       }
                       else {
                         Navigator.push(

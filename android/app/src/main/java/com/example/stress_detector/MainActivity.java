@@ -27,15 +27,17 @@ public class MainActivity extends FlutterActivity implements EmpaDataDelegate, E
     private MethodChannel methodChannel;
     private EmpaDeviceManager deviceManager;
 
-    Queue<Double> acc = new PriorityQueue<>();
+    Queue<Double> accx = new PriorityQueue<>();
+    Queue<Double> accy = new PriorityQueue<>();
+    Queue<Double> accz = new PriorityQueue<>();
     Queue<Double> eda = new PriorityQueue<>();
     Queue<Double> bvp = new PriorityQueue<>();
     Queue<Double> temp = new PriorityQueue<>();
 
-    int accFreq = 32;
-    int edaFreq = 4;
-    int bvpFreq = 64;
-    int tempFreq = 4;
+    int accFreq = 32 / 2;
+    int edaFreq = 4 / 2;
+    int bvpFreq = 64 / 2;
+    int tempFreq = 4 / 2;
 
     double secAvg(Queue<Double> queue, int freq) {
         double sum = 0.0;
@@ -49,7 +51,9 @@ public class MainActivity extends FlutterActivity implements EmpaDataDelegate, E
 
             HashMap<String, Double> res = new HashMap<>();
 
-            res.put("ACC", secAvg(acc, accFreq));
+            res.put("ACCX", secAvg(accx, accFreq));
+            res.put("ACCY", secAvg(accy, accFreq));
+            res.put("ACCZ", secAvg(accz, accFreq));
             res.put("BVP", secAvg(bvp, bvpFreq));
             res.put("TEMP", secAvg(temp, tempFreq));
             res.put("GSR", secAvg(eda, edaFreq));
@@ -95,7 +99,9 @@ public class MainActivity extends FlutterActivity implements EmpaDataDelegate, E
 
     @Override
     public void didReceiveAcceleration(int x, int y, int z, double timestamp) {
-        this.acc.add(Math.sqrt(x * x + y * y + z * z));
+        this.accx.add(x);
+        this.accy.add(y);
+        this.accz.add(z);
         handleData();
     }
 
