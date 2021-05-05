@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:stress_detector/pages/authentication/authentication_page.dart';
 import 'package:toast/toast.dart';
 import 'package:get/get.dart';
 import 'package:get/get_utils/get_utils.dart';
@@ -32,14 +33,8 @@ class _HomePageState extends State<HomePage> {
             children: [
               Container(
                 padding: const EdgeInsets.only(top: 100, bottom: 50),
-                child: Text(
-                  "Authenticate\nYourself",
-                  style: TextStyle(
-                    color: Colors.deepOrange,
-                    fontSize: 24,
-                    fontWeight: FontWeight.w600,
-                  ),
-                  textAlign: TextAlign.center,
+                child: Image.asset(
+                  'assets/images/logo.png'
                 ),
               ),
               Container(
@@ -102,10 +97,10 @@ class _HomePageState extends State<HomePage> {
                         Toast.show("Please choose who you are from the dropdown", context, duration: Toast.LENGTH_LONG, gravity:  Toast.BOTTOM);
                       }
                       else {
-                        //Navigator.push(
-                            //context,
-                            //MaterialPageRoute(builder: (context) => Authentication_Page(chosenPerson: this._chosenPerson))
-                        //);
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => Authentication_Page(chosenPerson: this._chosenPerson))
+                        );
                       }
                     },
                   ),

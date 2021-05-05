@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
       defaultTransition: Transition.rightToLeftWithFade,
       initialRoute: '/',
       getPages: [
-        GetPage(name: '/', page: () => HomePage(title: "Authenticator")),
+        GetPage(name: '/', page: () => HomePage(title: "Smartwatch Authenticator")),
       ],
     );
   }
