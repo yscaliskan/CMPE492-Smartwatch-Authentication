@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:toast/toast.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:stress_detector/controllers/classification.dart';
 
 class Authentication_Page extends StatefulWidget {
 
@@ -13,11 +14,11 @@ class Authentication_Page extends StatefulWidget {
 }
 
 class _Authentication_PageState extends State<Authentication_Page> {
-
+  bool prediction = ClassificationCtrlr.prediction;
   int _connectionStatus = 1;
 
   List<String> _connectionStatusTextList = <String> [
-    "Please wait 3 minutes for authentication",
+    "Please wait 1 minute for authentication",
     "You have entered the system successfully"
   ];
   List<Color> _connectionIconColorList = <Color>[
@@ -102,7 +103,7 @@ class _Authentication_PageState extends State<Authentication_Page> {
                       primary: _connectionIconColorList[_connectionStatus]
                   ),
                   child: Text(
-                    "CHANGE",
+                    "CHANGE --> "+ ClassificationCtrlr.prediction.toString(),
                     style: TextStyle(
                         color: Colors.white,
                         fontSize: 16,
@@ -110,7 +111,7 @@ class _Authentication_PageState extends State<Authentication_Page> {
                     ),
                   ),
                   onPressed: () {
-                    Toast.show("Changing context", context, duration: Toast.LENGTH_LONG, gravity:  Toast.BOTTOM);
+                    Toast.show("Changing context" , context, duration: Toast.LENGTH_LONG, gravity:  Toast.BOTTOM);
                     setState(() {
                       _connectionStatus = (_connectionStatus + 1) % 2;
                     });
