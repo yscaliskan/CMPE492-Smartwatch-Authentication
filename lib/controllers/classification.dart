@@ -36,7 +36,7 @@ class ClassificationCtrlr extends GetxController {
 
   static int counter_false = 0;
   static int counter_true = 0;
-  static bool prediction = false;
+  int prediction = 0;
 
 
   bool predicting;
@@ -126,11 +126,11 @@ class ClassificationCtrlr extends GetxController {
 
     print('-------------------');
     if(counter_true ==3 ){
-      prediction = true;
+      prediction = 1;
       print('YESSSSSSSSSSSSSSSSSSSSS');
     }
     else if(counter_false == 10 ){
-      prediction = false;
+      prediction = 2;
       print('NOOOOOOOOOOOOOOOOOO');
     }
 
