@@ -18,30 +18,34 @@ class _Authentication_PageState extends State<Authentication_Page> {
   int _connectionStatus = 1;
 
   List<String> _connectionStatusTextList = <String> [
-    "Please wait 1 minute for authentication",
-    "You have entered the system successfully"
+    "Please wait 30 seconds for authentication",
+    "You are authenticated successfully",
+    "Authentication failed"
   ];
   List<Color> _connectionIconColorList = <Color>[
-    Colors.red,
-    Colors.green
+    Colors.deepOrange,
+    Colors.green,
+    Colors.red
   ];
   List<IconData> _statusIconsList = <IconData>[
     Icons.lock,
-    Icons.lock_open
+    Icons.lock_open,
+    Icons.lock
   ];
   List<bool> _spinnerVisibility = <bool>[
     true,
-    false
+    false,
+    true
   ];
 
   @override
   Widget build(BuildContext context) {
     return GetBuilder<ClassificationCtrlr>(builder: (ctrlr) {
-      int prediction = ctrlr.prediction ;
+      int prediction = ctrlr.prediction;
       return Scaffold(
         appBar: AppBar(
           title: Text("Authentication Page"),
-          backgroundColor: _connectionIconColorList[_connectionStatus],
+          backgroundColor: _connectionIconColorList[ctrlr.prediction],
         ),
         body: Center(
           child: Column(
@@ -51,9 +55,9 @@ class _Authentication_PageState extends State<Authentication_Page> {
                 child: Align(
                   alignment: Alignment.topLeft,
                   child: Text(
-                    "Welcome, " + prediction.toString() + widget.chosenPerson,
+                    "Welcome, " + widget.chosenPerson,
                     style: TextStyle(
-                        color: _connectionIconColorList[_connectionStatus],
+                        color: _connectionIconColorList[ctrlr.prediction],
                         fontSize: 24,
                         fontWeight: FontWeight.w300
                     ),
@@ -63,9 +67,9 @@ class _Authentication_PageState extends State<Authentication_Page> {
               Container(
                 margin: const EdgeInsets.only(left: 16, right: 16, top: 48),
                 child: Text(
-                  _connectionStatusTextList[_connectionStatus],
+                  _connectionStatusTextList[ctrlr.prediction],
                   style: TextStyle(
-                      color: _connectionIconColorList[_connectionStatus],
+                      color: _connectionIconColorList[ctrlr.prediction],
                       fontSize: 18,
                       fontWeight: FontWeight.w600
                   ),
@@ -74,9 +78,9 @@ class _Authentication_PageState extends State<Authentication_Page> {
               Container(
                 margin: const EdgeInsets.only(left: 16, right: 16, top: 36),
                 child: Visibility(
-                  visible: _spinnerVisibility[_connectionStatus],
+                  visible: _spinnerVisibility[ctrlr.prediction],
                   child: SpinKitCircle(
-                    color: Colors.deepOrange,
+                    color: _connectionIconColorList[ctrlr.prediction],
                     size: 75.0,
                   ),
                 ),
@@ -86,8 +90,8 @@ class _Authentication_PageState extends State<Authentication_Page> {
                 child: Align(
                   alignment: Alignment.bottomCenter,
                   child: Icon(
-                      _statusIconsList[_connectionStatus],
-                      color: _connectionIconColorList[_connectionStatus],
+                      _statusIconsList[ctrlr.prediction],
+                      color: _connectionIconColorList[ctrlr.prediction],
                       size: 150
                   ),
                 ),
@@ -102,7 +106,7 @@ class _Authentication_PageState extends State<Authentication_Page> {
                   height: 50,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                        primary: _connectionIconColorList[_connectionStatus]
+                        primary: _connectionIconColorList[ctrlr.prediction]
                     ),
                     child: Text(
                       "CHANGE",
