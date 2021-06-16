@@ -22,6 +22,12 @@ class _Authentication_PageState extends State<Authentication_Page> {
     "You are authenticated successfully",
     "Authentication failed"
   ];
+  List<String> _connectionStatusSubtextList = <String> [
+    "",
+    "",
+    "Please hold still for authentication"
+  ];
+
   List<Color> _connectionIconColorList = <Color>[
     Colors.deepOrange,
     Colors.green,
@@ -71,7 +77,18 @@ class _Authentication_PageState extends State<Authentication_Page> {
                   style: TextStyle(
                       color: _connectionIconColorList[ctrlr.prediction],
                       fontSize: 18,
-                      fontWeight: FontWeight.w600
+                      fontWeight: FontWeight.w400
+                  ),
+                ),
+              ),
+              Container(
+                margin: const EdgeInsets.only(left: 16, right: 16, top: 16),
+                child: Text(
+                  _connectionStatusSubtextList[ctrlr.prediction],
+                  style: TextStyle(
+                      color: _connectionIconColorList[ctrlr.prediction],
+                      fontSize: 14,
+                      fontWeight: FontWeight.w400
                   ),
                 ),
               ),
@@ -93,35 +110,6 @@ class _Authentication_PageState extends State<Authentication_Page> {
                       _statusIconsList[ctrlr.prediction],
                       color: _connectionIconColorList[ctrlr.prediction],
                       size: 150
-                  ),
-                ),
-              ),
-              Container(
-                margin: const EdgeInsets.only(left: 16, right: 16, top: 50),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: SizedBox(
-                  width: double.infinity,
-                  height: 50,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                        primary: _connectionIconColorList[ctrlr.prediction]
-                    ),
-                    child: Text(
-                      "CHANGE",
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w300
-                      ),
-                    ),
-                    onPressed: () {
-                      Toast.show("Changing context" , context, duration: Toast.LENGTH_LONG, gravity:  Toast.BOTTOM);
-                      setState(() {
-                        _connectionStatus = (_connectionStatus + 1) % 2;
-                      });
-                    },
                   ),
                 ),
               ),
