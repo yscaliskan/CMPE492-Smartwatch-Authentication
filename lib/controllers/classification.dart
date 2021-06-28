@@ -91,45 +91,42 @@ class ClassificationCtrlr extends GetxController {
     var output = List(1 * 1).reshape([1, 1]);
     interpreter.run(input, output);
 
-    if (output[0][0] >= 0.403 && (counter_true < 3 && counter_false < 10)){
+    if (output[0][0] >= 0.148 && (counter_true < 5 && counter_false < 3)){
       counter_true += 1;
       counter_false = 0;
     }
-    else if(output[0][0] >= 0.403 && (counter_true < 3 && counter_false == 10)){
+    else if(output[0][0] >= 0.148 && (counter_true < 5 && counter_false == 3)){
       counter_true += 1;
-      if (counter_true == 3){
+      if (counter_true == 5){
         counter_false = 0;
       }
     }
-    else if(output[0][0] >= 0.403 && (counter_true == 3 && counter_false < 10)){
+    else if(output[0][0] >=  0.148 && (counter_true == 5 && counter_false < 3)){
       counter_false = 0;
     }
-    else if (output[0][0] < 0.403 && (counter_true < 3 && counter_false < 10)){
+    else if (output[0][0] <  0.148 && (counter_true < 5 && counter_false < 3)){
       counter_false += 1 ;
       counter_true = 0;
     }
-    else if(output[0][0] < 0.403 && (counter_true < 3 && counter_false == 10)){
+    else if(output[0][0] <  0.148 && (counter_true < 5 && counter_false == 3)){
       counter_true = 0;
     }
-    else if(output[0][0] < 0.403 && (counter_true == 3 && counter_false < 10)){
+    else if(output[0][0] <  0.148 && (counter_true == 5 && counter_false < 3)){
       counter_false +=1;
-      if (counter_false == 10 ){
+      if (counter_false == 3 ){
         counter_true = 0;
       }
     }
-
-
-
    // prediction = output[0][0];
     print("---------------------OUTPUTTTT----------------------------");
     print(output);
 
     print('-------------------');
-    if(counter_true ==3 ){
+    if(counter_true ==5 ){
       prediction = 1;
       print('YESSSSSSSSSSSSSSSSSSSSS');
     }
-    else if(counter_false == 10 ){
+    else if(counter_false == 3 ){
       prediction = 2;
       print('NOOOOOOOOOOOOOOOOOO');
     }
@@ -145,6 +142,6 @@ class ClassificationCtrlr extends GetxController {
   }
 
   void _loadModel() async {
-    interpreter = await Interpreter.fromAsset('model.tflite');
+    interpreter = await Interpreter.fromAsset('big_dataset_ahmet_senturk.tflite');
   }
 }

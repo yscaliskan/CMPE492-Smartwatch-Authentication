@@ -18,7 +18,7 @@ class _Authentication_PageState extends State<Authentication_Page> {
   int _connectionStatus = 1;
 
   List<String> _connectionStatusTextList = <String> [
-    "Please wait 30 seconds for authentication",
+    "Please wait 1 minute  for authentication",
     "You are authenticated successfully",
     "Authentication failed"
   ];
