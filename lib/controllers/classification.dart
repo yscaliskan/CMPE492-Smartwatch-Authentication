@@ -5,7 +5,7 @@ import 'package:tflite_flutter/tflite_flutter.dart';
 import '../pages/home/homepage.dart';
 
 class _Constants {
-  static const int windowLength = 120;
+  static const int windowLength = 20;
 
   static const double accMin = 50.022484;
   static const double accMax = 170.44026;
@@ -36,6 +36,7 @@ class ClassificationCtrlr extends GetxController {
   static int counter_false = 0;
   static int counter_true = 0;
   int prediction = 0;
+  int period_counter = 0;
   static String userName = "";
   static double threshold = 0;
 
@@ -72,6 +73,7 @@ class ClassificationCtrlr extends GetxController {
   }
 
   void addData(SensorData newData) {
+
     currentData = SensorData(
       newData.temp,
       newData.accx,
@@ -106,8 +108,11 @@ class ClassificationCtrlr extends GetxController {
     else {
       dataList.removeAt(0);
       dataList.add(newData);
-      if (interpreter != null && !predicting && counter_notonwrist <= 3 && authenticationState) _authenticate(dataList);
+      if (interpreter != null && !predicting && counter_notonwrist <= 3 && authenticationState && period_counter % 10 == 0 ){
+        _authenticate(dataList);
+      }
     }
+    period_counter += 1;
 
     update();
   }
@@ -176,17 +181,17 @@ class ClassificationCtrlr extends GetxController {
   void loadModel() async {
     switch(userName) {
       case "Ahmet Şentürk":
-        threshold = 0.04;
-        interpreter = await Interpreter.fromAsset('big_dataset_ahmet_senturk.tflite');
+        threshold = 0.19069;
+        interpreter = await Interpreter.fromAsset('model_ahmet_senturk_get_lstm_big_dataset_2_sec.tflite');
         break;
 
       case "Ahmet Yiğit Gedik":
-        threshold = 0.04;
+        threshold = 0.000001;
         interpreter = await Interpreter.fromAsset('big_dataset_ahmet_gedik_best.tflite');
         break;
 
       case "Yaşar Selçuk Çalışkan":
-        threshold = 0.04;
+        threshold = 0.99;
         interpreter = await Interpreter.fromAsset('big_dataset_yasar.tflite');
         break;
 
