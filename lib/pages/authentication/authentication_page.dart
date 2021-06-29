@@ -15,10 +15,15 @@ class Authentication_Page extends StatefulWidget {
 }
 
 class _Authentication_PageState extends State<Authentication_Page> {
-  int _connectionStatus = 1;
+
+  List<bool> _welcomeTextVisibility = <bool> [
+    false,
+    false,
+    true
+  ];
 
   List<String> _connectionStatusTextList = <String> [
-    "Please wait 1 minute  for authentication",
+    "Authenticating",
     "You are authenticated successfully",
     "Authentication failed"
   ];
@@ -60,12 +65,15 @@ class _Authentication_PageState extends State<Authentication_Page> {
                 margin: const EdgeInsets.only(left: 16, top: 36),
                 child: Align(
                   alignment: Alignment.topLeft,
-                  child: Text(
-                    "Welcome, " + widget.chosenPerson,
-                    style: TextStyle(
-                        color: _connectionIconColorList[ctrlr.prediction],
-                        fontSize: 24,
-                        fontWeight: FontWeight.w300
+                  child: Visibility(
+                    visible: _welcomeTextVisibility[ctrlr.prediction],
+                    child: Text(
+                      "Welcome, " + widget.chosenPerson,
+                      style: TextStyle(
+                          color: _connectionIconColorList[ctrlr.prediction],
+                          fontSize: 24,
+                          fontWeight: FontWeight.w300
+                      ),
                     ),
                   ),
                 ),
