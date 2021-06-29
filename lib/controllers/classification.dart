@@ -35,7 +35,7 @@ class ClassificationCtrlr extends GetxController {
 
   static int counter_false = 0;
   static int counter_true = 0;
-  int prediction = 0;
+  int prediction = 1;
   int period_counter = 0;
   static String userName = "";
   static double threshold = 0;
@@ -110,6 +110,7 @@ class ClassificationCtrlr extends GetxController {
       dataList.add(newData);
       if (interpreter != null && !predicting && counter_notonwrist <= 3 && authenticationState && period_counter % 10 == 0 ){
         _authenticate(dataList);
+        period_counter = 1;
       }
     }
     period_counter += 1;
