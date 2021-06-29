@@ -18,8 +18,8 @@ class _Authentication_PageState extends State<Authentication_Page> {
 
   List<bool> _welcomeTextVisibility = <bool> [
     false,
-    false,
-    true
+    true,
+    false
   ];
 
   List<String> _connectionStatusTextList = <String> [
@@ -27,6 +27,7 @@ class _Authentication_PageState extends State<Authentication_Page> {
     "You are authenticated successfully",
     "Authentication failed"
   ];
+
   List<String> _connectionStatusSubtextList = <String> [
     "",
     "",
@@ -53,6 +54,7 @@ class _Authentication_PageState extends State<Authentication_Page> {
   Widget build(BuildContext context) {
     return GetBuilder<ClassificationCtrlr>(builder: (ctrlr) {
       int prediction = ctrlr.prediction;
+      ctrlr.userName = widget.chosenPerson;
       return Scaffold(
         appBar: AppBar(
           title: Text("Authentication Page"),

@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:stress_detector/common_models/sensor_data.dart';
@@ -37,7 +38,7 @@ class ClassificationCtrlr extends GetxController {
   static int counter_false = 0;
   static int counter_true = 0;
   int prediction = 0;
-
+  String userName = "";
 
   bool predicting;
   bool stressed;
@@ -142,6 +143,22 @@ class ClassificationCtrlr extends GetxController {
   }
 
   void _loadModel() async {
-    interpreter = await Interpreter.fromAsset('big_dataset_ahmet_senturk.tflite');
+    switch(userName) {
+      case "Ahmet Şentürk":
+        interpreter = await Interpreter.fromAsset('big_dataset_ahmet_senturk.tflite');
+        break;
+
+      case "Ahmet Yiğit Gedik":
+        interpreter = await Interpreter.fromAsset('big_dataset_ahmet_gedik_best.tflite');
+        break;
+
+      case "Yaşar Selçuk Çalışkan":
+        interpreter = await Interpreter.fromAsset('big_dataset_yasar.tflite');
+        break;
+
+      case "":
+        print("Chosen Person is blank.");
+        break;
+    }
   }
 }
