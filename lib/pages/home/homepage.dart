@@ -2,13 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:stress_detector/pages/authentication/authentication_page.dart';
 import 'package:toast/toast.dart';
 import 'package:get/get.dart';
-import 'package:get/get_utils/get_utils.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:stress_detector/globals/dimensions.dart';
-import 'package:stress_detector/pages/home/widgets/data_table.dart';
-import 'package:stress_detector/pages/home/widgets/stress_hist_chart.dart';
-import 'package:stress_detector/pages/home/widgets/stress_meter.dart';
 import 'package:stress_detector/services/empatica.dart';
+import 'package:stress_detector/controllers/classification.dart';
 
 class HomePage extends StatefulWidget {
 
@@ -47,7 +42,7 @@ class _HomePageState extends State<HomePage> {
               Container(
                 padding: const EdgeInsets.only(top: 100, bottom: 50),
                 child: Image.asset(
-                  'assets/images/logo.png'
+                    'assets/images/logo.png'
                 ),
               ),
               Container(

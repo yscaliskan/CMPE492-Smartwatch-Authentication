@@ -54,7 +54,8 @@ class _Authentication_PageState extends State<Authentication_Page> {
   Widget build(BuildContext context) {
     return GetBuilder<ClassificationCtrlr>(builder: (ctrlr) {
       int prediction = ctrlr.prediction;
-      ctrlr.userName = widget.chosenPerson;
+      ClassificationCtrlr.userName = widget.chosenPerson;
+      ClassificationCtrlr.to.loadModel();
       return Scaffold(
         appBar: AppBar(
           title: Text("Authentication Page"),

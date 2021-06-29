@@ -38,7 +38,8 @@ class ClassificationCtrlr extends GetxController {
   static int counter_false = 0;
   static int counter_true = 0;
   int prediction = 0;
-  String userName = "";
+  static String userName = "";
+  static double threshold = 0;
 
   bool predicting;
   bool stressed;
@@ -47,7 +48,7 @@ class ClassificationCtrlr extends GetxController {
   ClassificationCtrlr() {
     predicting = false;
     dataList = [];
-    _loadModel();
+    loadModel();
   }
 
   @override
@@ -92,27 +93,27 @@ class ClassificationCtrlr extends GetxController {
     var output = List(1 * 1).reshape([1, 1]);
     interpreter.run(input, output);
 
-    if (output[0][0] >= 0.148 && (counter_true < 5 && counter_false < 3)){
+    if (output[0][0] >= threshold && (counter_true < 5 && counter_false < 3)){
       counter_true += 1;
       counter_false = 0;
     }
-    else if(output[0][0] >= 0.148 && (counter_true < 5 && counter_false == 3)){
+    else if(output[0][0] >= threshold && (counter_true < 5 && counter_false == 3)){
       counter_true += 1;
       if (counter_true == 5){
         counter_false = 0;
       }
     }
-    else if(output[0][0] >=  0.148 && (counter_true == 5 && counter_false < 3)){
+    else if(output[0][0] >=  threshold && (counter_true == 5 && counter_false < 3)){
       counter_false = 0;
     }
-    else if (output[0][0] <  0.148 && (counter_true < 5 && counter_false < 3)){
+    else if (output[0][0] <  threshold && (counter_true < 5 && counter_false < 3)){
       counter_false += 1 ;
       counter_true = 0;
     }
-    else if(output[0][0] <  0.148 && (counter_true < 5 && counter_false == 3)){
+    else if(output[0][0] <  threshold && (counter_true < 5 && counter_false == 3)){
       counter_true = 0;
     }
-    else if(output[0][0] <  0.148 && (counter_true == 5 && counter_false < 3)){
+    else if(output[0][0] <  threshold && (counter_true == 5 && counter_false < 3)){
       counter_false +=1;
       if (counter_false == 3 ){
         counter_true = 0;
@@ -132,6 +133,8 @@ class ClassificationCtrlr extends GetxController {
       print('NOOOOOOOOOOOOOOOOOO');
     }
 
+    print("---------------------Chosen Person----------------------------");
+    print(userName);
     predicting = false;
   }
 
@@ -142,25 +145,30 @@ class ClassificationCtrlr extends GetxController {
     data.temp = (data.temp - _Constants.tempMin) / _Constants.tempRange;
   }
 
-  void _loadModel() async {
+  void loadModel() async {
+    print("---------------------Chosen Person----------------------------");
     switch(userName) {
       case "Ahmet Şentürk":
         print("Chosen Person: Ahmet Şentürk");
+        threshold = 0.04;
         interpreter = await Interpreter.fromAsset('big_dataset_ahmet_senturk.tflite');
         break;
 
       case "Ahmet Yiğit Gedik":
         print("Chosen Person: Ahmet Yiğit Gedik");
+        threshold = 0.04;
         interpreter = await Interpreter.fromAsset('big_dataset_ahmet_gedik_best.tflite');
         break;
 
       case "Yaşar Selçuk Çalışkan":
         print("Chosen Person: Yaşar Selçuk Çalışkan");
+        threshold = 0.04;
         interpreter = await Interpreter.fromAsset('big_dataset_yasar.tflite');
         break;
 
       case "":
         print("Chosen Person is blank.");
+        //interpreter = await Interpreter.fromAsset('big_dataset_ahmet_senturk.tflite');
         break;
     }
   }
