@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:toast/toast.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:stress_detector/controllers/classification.dart';
 import 'package:get/get.dart';
@@ -19,35 +18,41 @@ class _Authentication_PageState extends State<Authentication_Page> {
   List<bool> _welcomeTextVisibility = <bool> [
     false,
     true,
+    false,
     false
   ];
 
   List<String> _connectionStatusTextList = <String> [
     "Authenticating",
     "You are authenticated successfully",
-    "Authentication failed"
+    "Authentication failed",
+    "Empatica E4 is not on wrist"
   ];
 
   List<String> _connectionStatusSubtextList = <String> [
     "",
     "",
-    "Please hold still for authentication"
+    "Please hold still for authentication",
+    "Please have your watch on your wrist"
   ];
 
   List<Color> _connectionIconColorList = <Color>[
     Colors.deepOrange,
     Colors.green,
+    Colors.red,
     Colors.red
   ];
   List<IconData> _statusIconsList = <IconData>[
     Icons.lock,
     Icons.lock_open,
-    Icons.lock
+    Icons.lock,
+    Icons.error_outline
   ];
   List<bool> _spinnerVisibility = <bool>[
     true,
     false,
-    true
+    true,
+    false
   ];
 
   @override

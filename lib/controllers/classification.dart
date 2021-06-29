@@ -1,10 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:hive/hive.dart';
 import 'package:stress_detector/common_models/sensor_data.dart';
-import 'package:stress_detector/common_models/stress_result.dart';
-import 'package:stress_detector/globals/constants.dart';
 import 'package:tflite_flutter/tflite_flutter.dart';
+
+import '../pages/home/homepage.dart';
 
 class _Constants {
   static const int windowLength = 120;
@@ -41,6 +39,10 @@ class ClassificationCtrlr extends GetxController {
   static String userName = "";
   static double threshold = 0;
 
+  static bool goBackToHomePage = false;
+  static int counter_notonwrist = 0;
+  static bool onWrist = false;
+
   bool predicting;
   bool stressed;
   double stressLevel;
@@ -57,6 +59,10 @@ class ClassificationCtrlr extends GetxController {
     super.onClose();
   }
 
+  void onWristStatusChanged(bool status) {
+    onWrist = status;
+  }
+
   void addData(SensorData newData) {
     currentData = SensorData(
       newData.temp,
@@ -67,14 +73,30 @@ class ClassificationCtrlr extends GetxController {
       newData.bvp,
     );
 
-  //   _normalize(newData);
+    if (!onWrist) {
+      counter_notonwrist += 1;
+      print("counter_onwrist: " + counter_notonwrist.toString());
+      print("onwrist: " + onWrist.toString());
+    }
+    else {
+      if (counter_notonwrist >= 3) {
+        prediction = 0;
+      }
+      counter_notonwrist = 0;
+    }
+
+    if (counter_notonwrist >= 3) {
+      //Get.to(HomePage(title: "Smartwatch Authenticator"));
+      dataList.clear();
+      prediction = 3;
+    }
 
     if (dataList.length < _Constants.windowLength)
       dataList.add(newData);
     else {
       dataList.removeAt(0);
       dataList.add(newData);
-      if (interpreter != null && !predicting) _authenticate(dataList);
+      if (interpreter != null && !predicting && counter_notonwrist <= 3) _authenticate(dataList);
     }
 
     update();
@@ -82,8 +104,6 @@ class ClassificationCtrlr extends GetxController {
 
   void _authenticate(List<SensorData> windowData) {
     predicting = true;
-    //var stressHist = Hive.box<StressResult>(Constants.stressBoxName);
-    //var stressRes = StressResult(dateTime: DateTime.now());
 
     var input = windowData.map((data) => data.toList).toList().reshape(
       [1, _Constants.windowLength, 6],
@@ -133,8 +153,6 @@ class ClassificationCtrlr extends GetxController {
       print('NOOOOOOOOOOOOOOOOOO');
     }
 
-    print("---------------------Chosen Person----------------------------");
-    print(userName);
     predicting = false;
   }
 
@@ -146,22 +164,18 @@ class ClassificationCtrlr extends GetxController {
   }
 
   void loadModel() async {
-    print("---------------------Chosen Person----------------------------");
     switch(userName) {
       case "Ahmet Şentürk":
-        print("Chosen Person: Ahmet Şentürk");
         threshold = 0.04;
         interpreter = await Interpreter.fromAsset('big_dataset_ahmet_senturk.tflite');
         break;
 
       case "Ahmet Yiğit Gedik":
-        print("Chosen Person: Ahmet Yiğit Gedik");
         threshold = 0.04;
         interpreter = await Interpreter.fromAsset('big_dataset_ahmet_gedik_best.tflite');
         break;
 
       case "Yaşar Selçuk Çalışkan":
-        print("Chosen Person: Yaşar Selçuk Çalışkan");
         threshold = 0.04;
         interpreter = await Interpreter.fromAsset('big_dataset_yasar.tflite');
         break;

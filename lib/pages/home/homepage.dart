@@ -3,7 +3,6 @@ import 'package:stress_detector/pages/authentication/authentication_page.dart';
 import 'package:toast/toast.dart';
 import 'package:get/get.dart';
 import 'package:stress_detector/services/empatica.dart';
-import 'package:stress_detector/controllers/classification.dart';
 
 class HomePage extends StatefulWidget {
 

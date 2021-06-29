@@ -179,5 +179,23 @@ public class MainActivity extends FlutterActivity implements EmpaDataDelegate, E
     @Override
     public void didUpdateOnWristStatus(int status) {
         System.out.println("======= UPDATE ON WRIST STATUS: " + status);
+        switch (status) {
+            case 1:
+                new Handler(Looper.getMainLooper()).post(new Runnable() {
+                    @Override
+                    public void run() {
+                        methodChannel.invokeMethod("updateWristStatus", true);
+                    }
+                });
+                break;
+            case 0:
+                new Handler(Looper.getMainLooper()).post(new Runnable() {
+                    @Override
+                    public void run() {
+                        methodChannel.invokeMethod("updateWristStatus", false);
+                    }
+                });
+                break;
+        }
     }
 }
