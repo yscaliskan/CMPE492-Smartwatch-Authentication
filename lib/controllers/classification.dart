@@ -42,6 +42,7 @@ class ClassificationCtrlr extends GetxController {
   static bool goBackToHomePage = false;
   static int counter_notonwrist = 0;
   static bool onWrist = false;
+  static bool authenticationState = true;
 
   bool predicting;
   bool stressed;
@@ -61,6 +62,13 @@ class ClassificationCtrlr extends GetxController {
 
   void onWristStatusChanged(bool status) {
     onWrist = status;
+  }
+
+  void setAuthenticationState(bool authState) {
+    print("set authentication state: " + authState.toString());
+    dataList.clear();
+    prediction = 0;
+    authenticationState = authState;
   }
 
   void addData(SensorData newData) {
@@ -91,12 +99,14 @@ class ClassificationCtrlr extends GetxController {
       prediction = 3;
     }
 
-    if (dataList.length < _Constants.windowLength)
+    if (dataList.length < _Constants.windowLength && authenticationState) {
       dataList.add(newData);
+    }
+
     else {
       dataList.removeAt(0);
       dataList.add(newData);
-      if (interpreter != null && !predicting && counter_notonwrist <= 3) _authenticate(dataList);
+      if (interpreter != null && !predicting && counter_notonwrist <= 3 && authenticationState) _authenticate(dataList);
     }
 
     update();

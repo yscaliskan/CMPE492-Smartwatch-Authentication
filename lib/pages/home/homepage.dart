@@ -4,6 +4,8 @@ import 'package:toast/toast.dart';
 import 'package:get/get.dart';
 import 'package:stress_detector/services/empatica.dart';
 
+import '../../controllers/classification.dart';
+
 class HomePage extends StatefulWidget {
 
   HomePage({Key key, this.title}) : super(key: key);
@@ -111,6 +113,7 @@ class _HomePageState extends State<HomePage> {
                             context,
                             MaterialPageRoute(builder: (context) => Authentication_Page(chosenPerson: this._chosenPerson))
                         );
+                        ClassificationCtrlr.authenticationState = true;
                       }
                     },
                   ),
