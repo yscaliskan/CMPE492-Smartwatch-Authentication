@@ -27,6 +27,19 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
+        actions: [
+          GetBuilder<EmpaticaService>(
+            builder: (ctrlr) => ctrlr.bandConnectedNonStatic
+                ? Padding(
+              padding: const EdgeInsets.only(right: 12),
+              child: Icon(
+                Icons.watch_rounded,
+                color: Theme.of(context).scaffoldBackgroundColor,
+              ),
+            )
+                : Container(),
+          ),
+        ],
       ),
       body: Center(
         child: Column(

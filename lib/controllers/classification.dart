@@ -145,14 +145,17 @@ class ClassificationCtrlr extends GetxController {
   void _loadModel() async {
     switch(userName) {
       case "Ahmet Şentürk":
+        print("Chosen Person: Ahmet Şentürk");
         interpreter = await Interpreter.fromAsset('big_dataset_ahmet_senturk.tflite');
         break;
 
       case "Ahmet Yiğit Gedik":
+        print("Chosen Person: Ahmet Yiğit Gedik");
         interpreter = await Interpreter.fromAsset('big_dataset_ahmet_gedik_best.tflite');
         break;
 
       case "Yaşar Selçuk Çalışkan":
+        print("Chosen Person: Yaşar Selçuk Çalışkan");
         interpreter = await Interpreter.fromAsset('big_dataset_yasar.tflite');
         break;
 

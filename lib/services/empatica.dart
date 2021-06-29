@@ -9,6 +9,8 @@ class EmpaticaService extends GetxController {
   MethodChannel _methodChannel;
 
   static bool bandConnected = false;
+  bool bandConnectedNonStatic = false;
+
 
   EmpaticaService() {
     _methodChannel = MethodChannel(_channelName);
@@ -26,6 +28,7 @@ class EmpaticaService extends GetxController {
 
   void _updateBandConnection(var args) async {
     bandConnected = args;
+    bandConnectedNonStatic = args;
     print(bandConnected);
     print("Band connection changed");
     update();
