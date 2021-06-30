@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:stress_detector/globals/colors.dart';
+import 'package:ppg_authentication/globals/colors.dart';
 
 class PageLoadingIndicator extends StatelessWidget {
   @override

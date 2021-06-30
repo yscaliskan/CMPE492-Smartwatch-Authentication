@@ -3,11 +3,11 @@ import 'package:get/get.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:hive/hive.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:stress_detector/common_models/stress_result.dart';
-import 'package:stress_detector/controllers/classification.dart';
-import 'package:stress_detector/globals/constants.dart';
-import 'package:stress_detector/globals/translations.dart';
-import 'package:stress_detector/pages/home/homepage.dart';
+import 'package:ppg_authentication/common_models/stress_result.dart';
+import 'package:ppg_authentication/controllers/classification.dart';
+import 'package:ppg_authentication/globals/constants.dart';
+import 'package:ppg_authentication/globals/translations.dart';
+import 'package:ppg_authentication/pages/home/homepage.dart';
 import 'services/empatica.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 

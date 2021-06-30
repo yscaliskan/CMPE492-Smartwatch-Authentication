@@ -1,5 +1,10 @@
 import 'package:get/get.dart';
-import 'package:stress_detector/common_models/sensor_data.dart';
+
+import 'package:hive/hive.dart';
+import 'package:ppg_authentication/common_models/sensor_data.dart';
+import 'package:ppg_authentication/common_models/stress_result.dart';
+import 'package:ppg_authentication/globals/constants.dart';
+
 import 'package:tflite_flutter/tflite_flutter.dart';
 
 import '../pages/home/homepage.dart';

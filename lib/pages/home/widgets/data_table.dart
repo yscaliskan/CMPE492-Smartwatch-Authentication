@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:stress_detector/common_models/sensor_data.dart';
-import 'package:stress_detector/controllers/classification.dart';
+import 'package:ppg_authentication/common_models/sensor_data.dart';
+import 'package:ppg_authentication/controllers/classification.dart';
 
 class SensorDataTable extends StatelessWidget {
   @override

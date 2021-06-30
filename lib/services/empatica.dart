@@ -1,9 +1,9 @@
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:stress_detector/common_models/sensor_data.dart';
-import 'package:stress_detector/controllers/classification.dart';
+import 'package:ppg_authentication/common_models/sensor_data.dart';
+import 'package:ppg_authentication/controllers/classification.dart';
 
-const _channelName = 'stress_detector/empatica';
+const _channelName = 'ppg_authentication/empatica';
 
 class EmpaticaService extends GetxController {
   MethodChannel _methodChannel;
