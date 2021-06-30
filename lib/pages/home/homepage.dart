@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ppg_authentication/pages/authentication/authentication_page.dart';
 import 'package:toast/toast.dart';
 import 'package:get/get.dart';
+
 import 'package:get/get_utils/get_utils.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ppg_authentication/globals/dimensions.dart';
@@ -9,6 +10,9 @@ import 'package:ppg_authentication/pages/home/widgets/data_table.dart';
 import 'package:ppg_authentication/pages/home/widgets/stress_hist_chart.dart';
 import 'package:ppg_authentication/pages/home/widgets/stress_meter.dart';
 import 'package:ppg_authentication/services/empatica.dart';
+
+
+import '../../controllers/classification.dart';
 
 class HomePage extends StatefulWidget {
 
@@ -27,6 +31,19 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
+        actions: [
+          GetBuilder<EmpaticaService>(
+            builder: (ctrlr) => ctrlr.bandConnectedNonStatic
+                ? Padding(
+              padding: const EdgeInsets.only(right: 12),
+              child: Icon(
+                Icons.watch_rounded,
+                color: Theme.of(context).scaffoldBackgroundColor,
+              ),
+            )
+                : Container(),
+          ),
+        ],
       ),
       body: Center(
         child: Column(
@@ -34,7 +51,7 @@ class _HomePageState extends State<HomePage> {
               Container(
                 padding: const EdgeInsets.only(top: 100, bottom: 50),
                 child: Image.asset(
-                  'assets/images/logo.png'
+                    'assets/images/logo.png'
                 ),
               ),
               Container(
@@ -104,6 +121,7 @@ class _HomePageState extends State<HomePage> {
                             context,
                             MaterialPageRoute(builder: (context) => Authentication_Page(chosenPerson: this._chosenPerson))
                         );
+                        ClassificationCtrlr.authenticationState = true;
                       }
                     },
                   ),

@@ -1,12 +1,16 @@
 import 'package:get/get.dart';
+
 import 'package:hive/hive.dart';
 import 'package:ppg_authentication/common_models/sensor_data.dart';
 import 'package:ppg_authentication/common_models/stress_result.dart';
 import 'package:ppg_authentication/globals/constants.dart';
+
 import 'package:tflite_flutter/tflite_flutter.dart';
 
+import '../pages/home/homepage.dart';
+
 class _Constants {
-  static const int windowLength = 120;
+  static const int windowLength = 30;
 
   static const double accMin = 50.022484;
   static const double accMax = 170.44026;
@@ -37,7 +41,13 @@ class ClassificationCtrlr extends GetxController {
   static int counter_false = 0;
   static int counter_true = 0;
   int prediction = 0;
+  static String userName = "";
+  static double threshold = 0;
 
+  static bool goBackToHomePage = false;
+  static int counter_notonwrist = 0;
+  static bool onWrist = false;
+  static bool authenticationState = true;
 
   bool predicting;
   bool stressed;
@@ -46,7 +56,7 @@ class ClassificationCtrlr extends GetxController {
   ClassificationCtrlr() {
     predicting = false;
     dataList = [];
-    _loadModel();
+    loadModel();
   }
 
   @override
@@ -55,7 +65,19 @@ class ClassificationCtrlr extends GetxController {
     super.onClose();
   }
 
+  void onWristStatusChanged(bool status) {
+    onWrist = status;
+  }
+
+  void setAuthenticationState(bool authState) {
+    print("set authentication state: " + authState.toString());
+    dataList.clear();
+    prediction = 0;
+    authenticationState = authState;
+  }
+
   void addData(SensorData newData) {
+
     currentData = SensorData(
       newData.temp,
       newData.accx,
@@ -65,14 +87,34 @@ class ClassificationCtrlr extends GetxController {
       newData.bvp,
     );
 
-  //   _normalize(newData);
+    if (!onWrist) {
+      counter_notonwrist += 1;
+      print("counter_onwrist: " + counter_notonwrist.toString());
+      print("onwrist: " + onWrist.toString());
+    }
+    else {
+      if (counter_notonwrist >= 3) {
+        prediction = 0;
+      }
+      counter_notonwrist = 0;
+    }
 
-    if (dataList.length < _Constants.windowLength)
+    if (counter_notonwrist >= 3) {
+      //Get.to(HomePage(title: "Smartwatch Authenticator"));
+      dataList.clear();
+      prediction = 3;
+    }
+
+    if (dataList.length < _Constants.windowLength && authenticationState) {
       dataList.add(newData);
+    }
+
     else {
       dataList.removeAt(0);
       dataList.add(newData);
-      if (interpreter != null && !predicting) _authenticate(dataList);
+      if (interpreter != null && !predicting && counter_notonwrist <= 3 && authenticationState){
+        _authenticate(dataList);
+      }
     }
 
     update();
@@ -80,8 +122,6 @@ class ClassificationCtrlr extends GetxController {
 
   void _authenticate(List<SensorData> windowData) {
     predicting = true;
-    //var stressHist = Hive.box<StressResult>(Constants.stressBoxName);
-    //var stressRes = StressResult(dateTime: DateTime.now());
 
     var input = windowData.map((data) => data.toList).toList().reshape(
       [1, _Constants.windowLength, 6],
@@ -91,27 +131,27 @@ class ClassificationCtrlr extends GetxController {
     var output = List(1 * 1).reshape([1, 1]);
     interpreter.run(input, output);
 
-    if (output[0][0] >= 0.148 && (counter_true < 5 && counter_false < 3)){
+    if (output[0][0] >= threshold && (counter_true < 5 && counter_false < 3)){
       counter_true += 1;
       counter_false = 0;
     }
-    else if(output[0][0] >= 0.148 && (counter_true < 5 && counter_false == 3)){
+    else if(output[0][0] >= threshold && (counter_true < 5 && counter_false == 3)){
       counter_true += 1;
       if (counter_true == 5){
         counter_false = 0;
       }
     }
-    else if(output[0][0] >=  0.148 && (counter_true == 5 && counter_false < 3)){
+    else if(output[0][0] >= threshold   && (counter_true == 5 && counter_false < 3)){
       counter_false = 0;
     }
-    else if (output[0][0] <  0.148 && (counter_true < 5 && counter_false < 3)){
+    else if (output[0][0] <  threshold && (counter_true < 5 && counter_false < 3)){
       counter_false += 1 ;
       counter_true = 0;
     }
-    else if(output[0][0] <  0.148 && (counter_true < 5 && counter_false == 3)){
+    else if(output[0][0] <  threshold && (counter_true < 5 && counter_false == 3)){
       counter_true = 0;
     }
-    else if(output[0][0] <  0.148 && (counter_true == 5 && counter_false < 3)){
+    else if(output[0][0] <  threshold && (counter_true == 5 && counter_false < 3)){
       counter_false +=1;
       if (counter_false == 3 ){
         counter_true = 0;
@@ -141,7 +181,27 @@ class ClassificationCtrlr extends GetxController {
     data.temp = (data.temp - _Constants.tempMin) / _Constants.tempRange;
   }
 
-  void _loadModel() async {
-    interpreter = await Interpreter.fromAsset('big_dataset_ahmet_senturk.tflite');
+  void loadModel() async {
+    switch(userName) {
+      case "Ahmet Şentürk":
+        threshold = 0.035;
+        interpreter = await Interpreter.fromAsset('model_ahmet_senturk_get_lstm_big_dataset_15_sec.tflite');
+        break;
+
+      case "Ahmet Yiğit Gedik":
+        threshold = 0.000001;
+        interpreter = await Interpreter.fromAsset('big_dataset_ahmet_gedik_best.tflite');
+        break;
+
+      case "Yaşar Selçuk Çalışkan":
+        threshold = 0.99;
+        interpreter = await Interpreter.fromAsset('big_dataset_yasar.tflite');
+        break;
+
+      case "":
+        print("Chosen Person is blank.");
+        //interpreter = await Interpreter.fromAsset('big_dataset_ahmet_senturk.tflite');
+        break;
+    }
   }
 }

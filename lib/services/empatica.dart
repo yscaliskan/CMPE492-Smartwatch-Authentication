@@ -9,6 +9,9 @@ class EmpaticaService extends GetxController {
   MethodChannel _methodChannel;
 
   static bool bandConnected = false;
+  bool bandConnectedNonStatic = false;
+
+  bool onWrist = false;
 
   EmpaticaService() {
     _methodChannel = MethodChannel(_channelName);
@@ -26,13 +29,23 @@ class EmpaticaService extends GetxController {
 
   void _updateBandConnection(var args) async {
     bandConnected = args;
+    bandConnectedNonStatic = args;
     print(bandConnected);
     print("Band connection changed");
+    update();
+  }
+
+  void _updateWristStatus(var args) async {
+    onWrist = args;
+    print(onWrist);
+    print("OnWrist Condition is changed");
+    ClassificationCtrlr.to.onWristStatusChanged(onWrist);
     update();
   }
 
   Future<void> _getEmpaticaData(MethodCall call) async {
     if (call.method == "getSensorData") _getSensorData(call.arguments);
     if(call.method == "bandConnection") _updateBandConnection(call.arguments);
+    if (call.method == "updateWristStatus") _updateWristStatus(call.arguments);
   }
 }
