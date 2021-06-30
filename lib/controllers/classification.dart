@@ -5,7 +5,7 @@ import 'package:tflite_flutter/tflite_flutter.dart';
 import '../pages/home/homepage.dart';
 
 class _Constants {
-  static const int windowLength = 20;
+  static const int windowLength = 30;
 
   static const double accMin = 50.022484;
   static const double accMax = 170.44026;
@@ -136,7 +136,7 @@ class ClassificationCtrlr extends GetxController {
         counter_false = 0;
       }
     }
-    else if(output[0][0] >=  threshold && (counter_true == 5 && counter_false < 3)){
+    else if(output[0][0] >= threshold   && (counter_true == 5 && counter_false < 3)){
       counter_false = 0;
     }
     else if (output[0][0] <  threshold && (counter_true < 5 && counter_false < 3)){
@@ -179,8 +179,8 @@ class ClassificationCtrlr extends GetxController {
   void loadModel() async {
     switch(userName) {
       case "Ahmet Şentürk":
-        threshold = 0.19069;
-        interpreter = await Interpreter.fromAsset('model_ahmet_senturk_get_lstm_big_dataset_2_sec.tflite');
+        threshold = 0.035;
+        interpreter = await Interpreter.fromAsset('model_ahmet_senturk_get_lstm_big_dataset_15_sec.tflite');
         break;
 
       case "Ahmet Yiğit Gedik":
