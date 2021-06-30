@@ -1,32 +1,11 @@
 import 'package:get/get.dart';
-
-import 'package:hive/hive.dart';
 import 'package:ppg_authentication/common_models/sensor_data.dart';
-import 'package:ppg_authentication/common_models/stress_result.dart';
-import 'package:ppg_authentication/globals/constants.dart';
-
 import 'package:tflite_flutter/tflite_flutter.dart';
 
 import '../pages/home/homepage.dart';
 
 class _Constants {
   static const int windowLength = 30;
-
-  static const double accMin = 50.022484;
-  static const double accMax = 170.44026;
-  static const double accRange = accMax - accMin;
-
-  static const double bvpMin = -886.73846;
-  static const double bvpMax = 1043.9814;
-  static const double bvpRange = bvpMax - bvpMin;
-
-  static const double edaMin = 0.0;
-  static const double edaMax = 85.21792;
-  static const double edaRange = edaMax - edaMin;
-
-  static const double tempMin = 2.63;
-  static const double tempMax = 37.565;
-  static const double tempRange = tempMax - tempMin;
 
 }
 
@@ -50,8 +29,7 @@ class ClassificationCtrlr extends GetxController {
   static bool authenticationState = true;
 
   bool predicting;
-  bool stressed;
-  double stressLevel;
+
 
   ClassificationCtrlr() {
     predicting = false;
@@ -172,13 +150,6 @@ class ClassificationCtrlr extends GetxController {
     }
 
     predicting = false;
-  }
-
-  void _normalize(data) {
-    data.acc = (data.acc - _Constants.accMin) / _Constants.accRange;
-    data.bvp = (data.bvp - _Constants.bvpMin) / _Constants.bvpRange;
-    data.eda = (data.eda - _Constants.edaMin) / _Constants.edaRange;
-    data.temp = (data.temp - _Constants.tempMin) / _Constants.tempRange;
   }
 
   void loadModel() async {

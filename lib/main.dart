@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:hive/hive.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:ppg_authentication/common_models/stress_result.dart';
 import 'package:ppg_authentication/controllers/classification.dart';
 import 'package:ppg_authentication/globals/constants.dart';
 import 'package:ppg_authentication/globals/translations.dart';
@@ -15,10 +14,6 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await Permission.location.request();
-
-  await Hive.initFlutter();
-  Hive.registerAdapter(StressResultAdapter());
-  await Hive.openBox<StressResult>(Constants.stressBoxName);
 
   Get.put(ClassificationCtrlr(), permanent: true);
   Get.put(EmpaticaService(), permanent: true);

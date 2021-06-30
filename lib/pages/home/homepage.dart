@@ -2,13 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:ppg_authentication/pages/authentication/authentication_page.dart';
 import 'package:toast/toast.dart';
 import 'package:get/get.dart';
-
-import 'package:get/get_utils/get_utils.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:ppg_authentication/globals/dimensions.dart';
-import 'package:ppg_authentication/pages/home/widgets/data_table.dart';
-import 'package:ppg_authentication/pages/home/widgets/stress_hist_chart.dart';
-import 'package:ppg_authentication/pages/home/widgets/stress_meter.dart';
 import 'package:ppg_authentication/services/empatica.dart';
 
 
