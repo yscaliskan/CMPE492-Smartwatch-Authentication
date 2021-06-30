@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:toast/toast.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:stress_detector/controllers/classification.dart';
+import 'package:ppg_authentication/controllers/classification.dart';
 import 'package:get/get.dart';
 
 class Authentication_Page extends StatefulWidget {

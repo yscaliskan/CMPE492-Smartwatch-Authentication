@@ -1,4 +1,4 @@
-package com.example.stress_detector;
+package com.example.ppg_authentication;
 
 import android.os.Handler;
 import android.os.Looper;
@@ -23,7 +23,7 @@ import java.util.PriorityQueue;
 import java.util.Queue;
 
 public class MainActivity extends FlutterActivity implements EmpaDataDelegate, EmpaStatusDelegate {
-    private static final String CHANNEL = "stress_detector/empatica";
+    private static final String CHANNEL = "ppg_authentication/empatica";
     private MethodChannel methodChannel;
     private EmpaDeviceManager deviceManager;
 

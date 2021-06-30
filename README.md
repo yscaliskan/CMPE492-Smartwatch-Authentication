@@ -1,4 +1,4 @@
-# stress_detector
+# ppg_authentication
 
 A new Flutter project.
 

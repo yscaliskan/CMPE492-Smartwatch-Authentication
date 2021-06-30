@@ -3,10 +3,10 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:stress_detector/controllers/classification.dart';
-import 'package:stress_detector/globals/colors.dart';
-import 'package:stress_detector/globals/dimensions.dart';
-import 'package:stress_detector/globals/shadows.dart';
+import 'package:ppg_authentication/controllers/classification.dart';
+import 'package:ppg_authentication/globals/colors.dart';
+import 'package:ppg_authentication/globals/dimensions.dart';
+import 'package:ppg_authentication/globals/shadows.dart';
 
 class StressMeter extends StatelessWidget {
   double get size => [

@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:intl/intl.dart';
-import 'package:stress_detector/common_models/stress_result.dart';
-import 'package:stress_detector/globals/colors.dart';
-import 'package:stress_detector/globals/constants.dart';
+import 'package:ppg_authentication/common_models/stress_result.dart';
+import 'package:ppg_authentication/globals/colors.dart';
+import 'package:ppg_authentication/globals/constants.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'dart:ui';
 
