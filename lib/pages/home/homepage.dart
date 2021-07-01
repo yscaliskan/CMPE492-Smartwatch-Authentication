@@ -59,8 +59,6 @@ class _HomePageState extends State<HomePage> {
                     'Ahmet Şentürk',
                     'Ahmet Yiğit Gedik',
                     'Yaşar Selçuk Çalışkan',
-                    'Ömer Şentürk',
-                    'Deren Olağan',
                   ].map<DropdownMenuItem<String>>((String value) {
                     return DropdownMenuItem<String>(
                       value: value,

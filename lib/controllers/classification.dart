@@ -160,8 +160,8 @@ class ClassificationCtrlr extends GetxController {
         break;
 
       case "Ahmet Yiğit Gedik":
-        threshold = 0.000001;
-        interpreter = await Interpreter.fromAsset('big_dataset_ahmet_gedik_best.tflite');
+        threshold = 0.104;
+        interpreter = await Interpreter.fromAsset('model_ahmet_gedik_get_lstm_big_dataset_15_sec.tflite');
         break;
 
       case "Yaşar Selçuk Çalışkan":
